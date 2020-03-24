@@ -1,17 +1,23 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Image } from 'react-native';
 
-import Input from '~/components/Input';
+import logo from '~/assets/fastfeet-logo.png';
 
-import { Background, SubmitButton } from './styles';
+import { Container, Form, FormInput, SubmitButton } from './styles';
 
 export default function SignIn() {
   return (
-    <Background>
-      <Text>SignIn</Text>
-      <Input placeholder="Informe seu ID de cadastro" />
+    <Container>
+      <Image source={logo} />
 
-      <SubmitButton>Entrar no sistema</SubmitButton>
-    </Background>
+      <Form>
+        <FormInput
+          autoCapitalize="none"
+          placeholder="Informe seu ID de cadastro"
+        />
+      </Form>
+
+      <SubmitButton onPress={() => {}}>Entrar no sistema</SubmitButton>
+    </Container>
   );
 }
