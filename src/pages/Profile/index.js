@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { StatusBar } from 'react-native';
+import { parseISO, format } from 'date-fns';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import userAvatar from '~/assets/avatar-user.png';
-
 import { signOut } from '~/store/modules/auth/actions';
 
 import { Container, Avatar, Title, DeliveryData, LogoutButton } from './styles';
 
 export default function Profile() {
   const dispatch = useDispatch();
-
   const { deliveryman, loading } = useSelector((state) => state.auth);
+
+  const [dateRegister, setDateRegister] = useState('');
 
   console.tron.log(loading);
 
@@ -40,7 +42,9 @@ export default function Profile() {
         <DeliveryData>{deliveryman.email}</DeliveryData>
 
         <Title>Data de cadastro</Title>
-        <DeliveryData>10/01/2020</DeliveryData>
+        <DeliveryData>
+          {format(parseISO(deliveryman.created_at), 'dd/MM/YYY')}
+        </DeliveryData>
 
         <LogoutButton onPress={handleLogout}>Logout</LogoutButton>
       </Container>

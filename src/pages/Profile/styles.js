@@ -17,7 +17,7 @@ export const Avatar = styled.Image`
 `;
 
 export const Title = styled.Text`
-  font-size: 14px;
+  font-size: 12px;
   color: #666666;
   margin-top: 15px;
   align-self: stretch;
