@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { StatusBar } from 'react-native';
 import { parseISO, format } from 'date-fns';
@@ -12,8 +12,6 @@ import { Container, Avatar, Title, DeliveryData, LogoutButton } from './styles';
 export default function Profile() {
   const dispatch = useDispatch();
   const { deliveryman, loading } = useSelector((state) => state.auth);
-
-  const [dateRegister, setDateRegister] = useState('');
 
   console.tron.log(loading);
 
