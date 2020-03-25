@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image } from 'react-native';
+import { Image, StatusBar } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import logo from '~/assets/fastfeet-logo.png';
@@ -20,23 +20,27 @@ export default function SignIn() {
   }
 
   return (
-    <Container>
-      <Image source={logo} />
+    <>
+      <StatusBar barStyle="light-content" backgroundColor="#7D40E7" />
 
-      <Form>
-        <FormInput
-          autoCapitalize="none"
-          placeholder="Informe seu ID de cadastro"
-          returnKeyType="send"
-          onSubmitEditing={handleSubmit}
-          value={id}
-          onChangeText={setId}
-        />
-      </Form>
+      <Container>
+        <Image source={logo} />
 
-      <SubmitButton loading={loading} onPress={handleSubmit}>
-        Entrar no sistema
-      </SubmitButton>
-    </Container>
+        <Form>
+          <FormInput
+            autoCapitalize="none"
+            placeholder="Informe seu ID de cadastro"
+            returnKeyType="send"
+            onSubmitEditing={handleSubmit}
+            value={id}
+            onChangeText={setId}
+          />
+        </Form>
+
+        <SubmitButton loading={loading} onPress={handleSubmit}>
+          Entrar no sistema
+        </SubmitButton>
+      </Container>
+    </>
   );
 }
