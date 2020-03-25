@@ -30,6 +30,7 @@ export default function SignIn() {
           <FormInput
             autoCapitalize="none"
             placeholder="Informe seu ID de cadastro"
+            keyboardType="numeric"
             returnKeyType="send"
             onSubmitEditing={handleSubmit}
             value={id}

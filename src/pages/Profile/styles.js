@@ -5,22 +5,31 @@ import Button from '~/components/Button';
 export const Container = styled.View`
   flex: 1;
   padding: 0 35px;
+  align-items: center;
 `;
 
 export const Avatar = styled.Image`
-  border-radius: 25px;
+  width: 135px;
+  height: 135px;
+  margin-top: 80px;
+  margin-bottom: 30px;
+  border-radius: 100px;
 `;
 
 export const Title = styled.Text`
   font-size: 14px;
   color: #666666;
   margin-top: 15px;
+  align-self: stretch;
+  text-align: left;
 `;
 
 export const DeliveryData = styled.Text`
   font-size: 20px;
   color: #666666;
   font-weight: bold;
+  align-self: stretch;
+  text-align: left;
 `;
 
 export const LogoutButton = styled(Button)`

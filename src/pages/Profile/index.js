@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { StatusBar } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import userAvatar from '~/assets/avatar-user.png';
 
 import { signOut } from '~/store/modules/auth/actions';
 
@@ -23,11 +24,13 @@ export default function Profile() {
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <Container>
         <Avatar
-          source={{
-            uri: deliveryman.avatar
-              ? `http://192.168.0.107:3333/files/${deliveryman.avatar.path}`
-              : `https://api.adorable.io/avatar/50/rocketseat.png`,
-          }}
+          source={
+            deliveryman.avatar
+              ? {
+                  uri: `http://192.168.0.107:3333/files/${deliveryman.avatar.path}`,
+                }
+              : userAvatar
+          }
         />
 
         <Title>Nome completo</Title>
