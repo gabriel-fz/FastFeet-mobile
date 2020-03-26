@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { Alert, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import BackgroundDetails from '~/components/BackgroundDetails';
@@ -10,7 +10,10 @@ export default function InformProblem({ navigation }) {
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
 
-  function handleSubmit() {}
+  function handleSubmit() {
+    Alert.alert('Sucesso!', 'O problema que você informou foi recebido!');
+    navigation.navigate('DeliveryDetails');
+  }
 
   return (
     <>
