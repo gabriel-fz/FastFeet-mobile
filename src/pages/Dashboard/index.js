@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { StatusBar, Text } from 'react-native';
+import { StatusBar, TouchableOpacity, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '~/services/api';
 
@@ -19,7 +19,7 @@ import {
   TextNotFound,
 } from './styles';
 
-export default function Dashboard() {
+export default function Dashboard({ navigation }) {
   const { deliveryman } = useSelector((state) => state.auth);
 
   const [deliveriesCompleteds, setDeliveriesCompleteds] = useState(false);
@@ -69,7 +69,9 @@ export default function Dashboard() {
         <List
           data={deliveries}
           keyExtractor={(item) => String(item.id)}
-          renderItem={({ item }) => <Delivery data={item} />}
+          renderItem={({ item }) => (
+            <Delivery data={item} navigation={navigation} />
+          )}
         />
       ) : (
         <NotFound>
@@ -81,8 +83,5 @@ export default function Dashboard() {
 }
 
 Dashboard.navigationOptions = {
-  tabBarLabel: 'Entregas',
-  tabBarIcon: ({ tintColor }) => (
-    <Icon name="reorder" size={20} color={tintColor} />
-  ),
+  headerShown: false,
 };

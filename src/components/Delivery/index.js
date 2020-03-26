@@ -16,7 +16,7 @@ import {
   DetailLinkText,
 } from './styles';
 
-export default function Delivery({ data }) {
+export default function Delivery({ data, navigation }) {
   return (
     <Container>
       <Header>
@@ -39,7 +39,9 @@ export default function Delivery({ data }) {
           <TextDetail>{data.recipient.city}</TextDetail>
         </Detail>
 
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('DeliveryDetails')}
+        >
           <DetailLinkText>Ver detalhes</DetailLinkText>
         </TouchableOpacity>
       </Footer>
