@@ -3,8 +3,6 @@ import styled from 'styled-components/native';
 export const Container = styled.SafeAreaView`
   flex: 1;
   padding: 0 35px;
-  align-items: center;
-  color: #fff;
   background: #fff;
 `;
 
@@ -14,6 +12,7 @@ export const HeaderList = styled.View`
   justify-content: space-between;
   align-items: center;
   align-self: stretch;
+  padding-bottom: 15px;
 `;
 
 export const Title = styled.Text`
@@ -38,5 +37,16 @@ export const OptionsButtonText = styled.Text`
 
 export const List = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
-  contentContainerStyle: { padding: 30 },
 })``;
+
+export const NotFound = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const TextNotFound = styled.Text`
+  font-size: 20px;
+  font-weight: bold;
+  color: #999999;
+`;

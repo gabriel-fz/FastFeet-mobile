@@ -16,16 +16,16 @@ import {
   DetailLinkText,
 } from './styles';
 
-export default function Delivery() {
+export default function Delivery({ data }) {
   return (
     <Container>
       <Header>
         <Icon name="local-shipping" size={30} color="#7d40e7" />
-        <Name>Encomenda 1</Name>
+        <Name>{data.product}</Name>
       </Header>
 
       <Content>
-        <StepIndicator />
+        <StepIndicator retirada={data.start_date} entregre={data.end_date} />
       </Content>
 
       <Footer>
@@ -36,7 +36,7 @@ export default function Delivery() {
 
         <Detail>
           <TitleDetail>Cidade</TitleDetail>
-          <TextDetail>Diadema</TextDetail>
+          <TextDetail>{data.recipient.city}</TextDetail>
         </Detail>
 
         <TouchableOpacity onPress={() => {}}>

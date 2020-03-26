@@ -10,7 +10,7 @@ import {
   StepsText,
 } from './styles';
 
-export default function StepIndicator() {
+export default function StepIndicator({ retirada, entregre }) {
   return (
     <Container>
       <LineContainer>
@@ -24,11 +24,11 @@ export default function StepIndicator() {
           <StepsText>Retirada</StepsText>
         </CheckContent>
         <CheckContent>
-          <CheckPointer active={true} />
+          <CheckPointer active={retirada} />
           <StepsText>Retirada</StepsText>
         </CheckContent>
         <CheckContent>
-          <CheckPointer active={false} />
+          <CheckPointer active={entregre} />
           <StepsText>Entregue</StepsText>
         </CheckContent>
       </Check>

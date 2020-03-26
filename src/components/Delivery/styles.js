@@ -4,6 +4,7 @@ export const Container = styled.View`
   border-radius: 4px;
   align-self: stretch;
   border: 1px solid #eee;
+  margin-bottom: 28px;
 `;
 
 export const Header = styled.View`
@@ -17,7 +18,7 @@ export const Header = styled.View`
 export const Content = styled.View`
   align-self: stretch;
   background: #fff;
-  padding: 13px;
+  padding: 13px 13px 20px;
 `;
 
 export const Footer = styled.View`
@@ -26,7 +27,7 @@ export const Footer = styled.View`
   background: #f8f9fd;
   justify-content: space-between;
   align-items: flex-end;
-  padding: 13px;
+  padding: 20px;
 `;
 
 export const Name = styled.Text`

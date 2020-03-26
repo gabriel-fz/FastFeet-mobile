@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { StatusBar } from 'react-native';
+import { StatusBar, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import api from '~/services/api';
 
 import Header from '~/components/Header';
 import Delivery from '~/components/Delivery';
@@ -14,12 +15,32 @@ import {
   OptionsButton,
   OptionsButtonText,
   List,
+  NotFound,
+  TextNotFound,
 } from './styles';
 
 export default function Dashboard() {
   const { deliveryman } = useSelector((state) => state.auth);
 
-  const [deliveryCompleted, setDeliveryCompleted] = useState(false);
+  const [deliveriesCompleteds, setDeliveriesCompleteds] = useState(false);
+  const [deliveries, setDeliveries] = useState([]);
+
+  useEffect(() => {
+    async function loadDeliveries() {
+      const response = await api.get(
+        `deliveyman/${deliveryman.id}/deliveries`,
+        {
+          params: { completed: deliveriesCompleteds },
+        }
+      );
+
+      setDeliveries(response.data);
+    }
+
+    loadDeliveries();
+  }, [deliveriesCompleteds]);
+
+  console.tron.log(deliveries.length);
 
   return (
     <Container>
@@ -30,21 +51,31 @@ export default function Dashboard() {
         <Title>Entregas</Title>
 
         <Options>
-          <OptionsButton onPress={() => setDeliveryCompleted(false)}>
-            <OptionsButtonText active={!deliveryCompleted}>
+          <OptionsButton onPress={() => setDeliveriesCompleteds(false)}>
+            <OptionsButtonText active={!deliveriesCompleteds}>
               Pendentes
             </OptionsButtonText>
           </OptionsButton>
 
-          <OptionsButton onPress={() => setDeliveryCompleted(true)}>
-            <OptionsButtonText active={deliveryCompleted}>
+          <OptionsButton onPress={() => setDeliveriesCompleteds(true)}>
+            <OptionsButtonText active={deliveriesCompleteds}>
               Entregues
             </OptionsButtonText>
           </OptionsButton>
         </Options>
       </HeaderList>
 
-      <Delivery />
+      {deliveries.length > 0 ? (
+        <List
+          data={deliveries}
+          keyExtractor={(item) => String(item.id)}
+          renderItem={({ item }) => <Delivery data={item} />}
+        />
+      ) : (
+        <NotFound>
+          <TextNotFound>Nenhuma entrega encontrada</TextNotFound>
+        </NotFound>
+      )}
     </Container>
   );
 }
