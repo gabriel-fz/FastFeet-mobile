@@ -62,7 +62,7 @@ export default function DeliveryDetails({ navigation }) {
         </CardInfo>
 
         <RowButtons>
-          <OptionButton>
+          <OptionButton onPress={() => navigation.navigate('InformProblem')}>
             <Icon name="highlight-off" size={30} color="#E74040" />
             <TextButton>Informar</TextButton>
             <TextButton>Problema</TextButton>
@@ -70,7 +70,7 @@ export default function DeliveryDetails({ navigation }) {
 
           <Divider />
 
-          <OptionButton>
+          <OptionButton onPress={() => navigation.navigate('ViewProblems')}>
             <Icon name="info-outline" size={30} color="#E7BA40" />
             <TextButton>Visualizar</TextButton>
             <TextButton>Problemas</TextButton>
@@ -78,7 +78,7 @@ export default function DeliveryDetails({ navigation }) {
 
           <Divider />
 
-          <OptionButton>
+          <OptionButton onPress={() => navigation.navigate('DeliveryConfirm')}>
             <Icon name="check" size={30} color="#7D40E7" />
             <TextButton>Confirmar</TextButton>
             <TextButton>Entrega</TextButton>

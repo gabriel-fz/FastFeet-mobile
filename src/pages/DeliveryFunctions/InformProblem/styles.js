@@ -1,31 +1,26 @@
-import { Platform } from 'react-native';
 import styled from 'styled-components/native';
 
 import Input from '~/components/Input';
 import Button from '~/components/Button';
 
-export const Container = styled.KeyboardAvoidingView.attrs({
-  enabled: Platform.OS === 'ios',
-  behavior: 'padding',
-})`
+export const Container = styled.View`
   flex: 1;
-  background: #7d40e7;
-  justify-content: center;
-  align-items: center;
-  padding: 0 30px;
+  padding: 80px 20px 0;
 `;
 
 export const Form = styled.View`
   align-self: stretch;
-  margin-top: 35px;
+  justify-content: flex-start;
 `;
 
 export const FormInput = styled(Input)`
-  height: 46px;
   margin-bottom: 15px;
+  justify-content: flex-start;
+  border: 1px solid #eee;
+  height: 300px;
 `;
 
 export const SubmitButton = styled(Button)`
   align-self: stretch;
-  background: #82bf18;
+  background: #7d40e7;
 `;
