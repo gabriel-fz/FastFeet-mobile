@@ -37,3 +37,15 @@ export const DateProblem = styled.Text`
   font-size: 12px;
   color: #c1c1c1;
 `;
+
+export const NotFound = styled.View`
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const TextNotFound = styled.Text`
+  font-size: 20px;
+  font-weight: bold;
+  color: #999999;
+`;

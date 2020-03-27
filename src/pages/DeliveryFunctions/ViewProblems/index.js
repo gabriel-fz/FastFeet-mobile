@@ -1,6 +1,8 @@
-import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import api from '~/services/api';
 
 import BackgroundDetails from '~/components/BackgroundDetails';
 
@@ -11,31 +13,53 @@ import {
   CardProblem,
   TextProblem,
   DateProblem,
+  NotFound,
+  TextNotFound,
 } from './styles';
 
-const data = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
 export default function ViewProblems({ navigation }) {
+  const delivery = navigation.getParam('delivery');
+
+  const [problems, setProblems] = useState([]);
+
+  useEffect(() => {
+    async function loadProblems() {
+      const response = await api.get(`delivery/${delivery.id}/problems`);
+
+      setProblems(response.data);
+    }
+
+    loadProblems();
+
+    console.tron.log(problems);
+  }, []);
+
+  console.tron.log('chegou:');
+  console.tron.log(delivery);
+
   return (
     <>
       <BackgroundDetails />
 
       <Container>
-        <DeliveryName>Encomenda 01</DeliveryName>
+        <DeliveryName>{delivery.product}</DeliveryName>
 
-        <List
-          data={data}
-          keyExtractor={(item) => String(item)}
-          renderItem={({ item }) => (
-            <CardProblem>
-              <TextProblem>
-                Destinatário ausente com um problema muiro grande, grande ate de
-                mais
-              </TextProblem>
-              <DateProblem>14/01/2020</DateProblem>
-            </CardProblem>
-          )}
-        />
+        {problems.length > 0 ? (
+          <List
+            data={problems}
+            keyExtractor={(item) => String(item.id)}
+            renderItem={({ item }) => (
+              <CardProblem>
+                <TextProblem>{item.description}</TextProblem>
+                <DateProblem>14/01/2020</DateProblem>
+              </CardProblem>
+            )}
+          />
+        ) : (
+          <NotFound>
+            <TextNotFound>Nenhuma problema encontrado</TextNotFound>
+          </NotFound>
+        )}
       </Container>
     </>
   );
