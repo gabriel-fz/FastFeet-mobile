@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TouchableOpacity } from 'react-native';
+import { parseISO, format } from 'date-fns';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import api from '~/services/api';
@@ -51,7 +52,9 @@ export default function ViewProblems({ navigation }) {
             renderItem={({ item }) => (
               <CardProblem>
                 <TextProblem>{item.description}</TextProblem>
-                <DateProblem>14/01/2020</DateProblem>
+                <DateProblem>
+                  {format(parseISO(item.createdAt), 'dd/MM/YYY')}
+                </DateProblem>
               </CardProblem>
             )}
           />

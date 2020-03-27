@@ -70,7 +70,9 @@ export default function DeliveryDetails({ navigation }) {
         </CardInfo>
 
         <RowButtons>
-          <OptionButton onPress={() => navigation.navigate('InformProblem')}>
+          <OptionButton
+            onPress={() => navigation.navigate('InformProblem', { delivery })}
+          >
             <Icon name="highlight-off" size={30} color="#E74040" />
             <TextButton>Informar</TextButton>
             <TextButton>Problema</TextButton>

@@ -2,17 +2,30 @@ import React, { useState } from 'react';
 import { Alert, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import api from '~/services/api';
+
 import BackgroundDetails from '~/components/BackgroundDetails';
 
 import { Container, Form, FormInput, SubmitButton } from './styles';
 
 export default function InformProblem({ navigation }) {
+  const delivery = navigation.getParam('delivery');
+
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
 
-  function handleSubmit() {
-    Alert.alert('Sucesso!', 'O problema que você informou foi recebido!');
-    navigation.navigate('DeliveryDetails');
+  async function handleSubmit() {
+    setLoading(true);
+    try {
+      await api.post(`deliveyman/${delivery.id}/problems`, { description });
+
+      setLoading(false);
+      Alert.alert('Sucesso!', 'O problema que você informou foi recebido!');
+      navigation.navigate('DeliveryDetails');
+    } catch (err) {
+      setLoading(false);
+      Alert.alert('Erro', 'Não foi possível enviar o problema');
+    }
   }
 
   return (
