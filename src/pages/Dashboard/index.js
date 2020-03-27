@@ -34,13 +34,13 @@ export default function Dashboard({ navigation }) {
         }
       );
 
+      console.tron.log('...');
+
       setDeliveries(response.data);
     }
 
     loadDeliveries();
   }, [deliveriesCompleteds]);
-
-  console.tron.log(deliveries.length);
 
   return (
     <Container>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
+import { parseISO, format } from 'date-fns';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import BackgroundDetails from '~/components/BackgroundDetails';
@@ -19,6 +20,13 @@ import {
 } from './styles';
 
 export default function DeliveryDetails({ navigation }) {
+  const delivery = navigation.getParam('data');
+  const { recipient } = delivery;
+
+  function formatDate(date) {
+    return date ? format(parseISO(date), 'dd/MM/YYY') : '- - / - - / - -';
+  }
+
   return (
     <>
       <BackgroundDetails />
@@ -30,13 +38,13 @@ export default function DeliveryDetails({ navigation }) {
           </CardHeader>
 
           <TitleInfo>DESTINATÁRIO</TitleInfo>
-          <TextInfo>Ludwig van Beethoven</TextInfo>
+          <TextInfo>{delivery.recipient.name}</TextInfo>
 
           <TitleInfo>ENDEREÇO DE ENTREGA</TitleInfo>
-          <TextInfo>Rua Beethoven, 1729, Diadema - SP, 09960-580</TextInfo>
+          <TextInfo>{`${recipient.address}, ${recipient.address_number}, ${recipient.city} - ${recipient.state}, ${recipient.zip_code}`}</TextInfo>
 
           <TitleInfo>PRODUTO</TitleInfo>
-          <TextInfo>Yamaha SX7</TextInfo>
+          <TextInfo>{delivery.product}</TextInfo>
         </CardInfo>
 
         <CardInfo>
@@ -46,17 +54,17 @@ export default function DeliveryDetails({ navigation }) {
           </CardHeader>
 
           <TitleInfo>STATUS</TitleInfo>
-          <TextInfo>Pendente</TextInfo>
+          <TextInfo>{delivery.end_date ? 'Entrege' : 'Pendente'}</TextInfo>
 
           <Row>
             <View>
               <TitleInfo>DATA DE RETIRADA</TitleInfo>
-              <TextInfo>14 / 01 / 2020</TextInfo>
+              <TextInfo>{formatDate(delivery.start_date)}</TextInfo>
             </View>
 
             <View>
               <TitleInfo>DATA DE ENTREGA</TitleInfo>
-              <TextInfo>- - / - - / - -</TextInfo>
+              <TextInfo>{formatDate(delivery.end_date)}</TextInfo>
             </View>
           </Row>
         </CardInfo>

@@ -40,7 +40,7 @@ export default function Delivery({ data, navigation }) {
         </Detail>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate('DeliveryDetails')}
+          onPress={() => navigation.navigate('DeliveryDetails', { data })}
         >
           <DetailLinkText>Ver detalhes</DetailLinkText>
         </TouchableOpacity>
