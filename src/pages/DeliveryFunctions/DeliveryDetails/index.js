@@ -1,9 +1,12 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, Alert, TouchableOpacity } from 'react-native';
 import { parseISO, format } from 'date-fns';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import api from '~/services/api';
+
 import BackgroundDetails from '~/components/BackgroundDetails';
+import OptionsDelivery from '~/components/OptionsDelivery';
 
 import {
   Container,
@@ -13,10 +16,6 @@ import {
   CardTitle,
   TitleInfo,
   TextInfo,
-  RowButtons,
-  Divider,
-  OptionButton,
-  TextButton,
 } from './styles';
 
 export default function DeliveryDetails({ navigation }) {
@@ -25,6 +24,36 @@ export default function DeliveryDetails({ navigation }) {
 
   function formatDate(date) {
     return date ? format(parseISO(date), 'dd/MM/YYY') : '- - / - - / - -';
+  }
+
+  async function WithdrawDelivery() {
+    try {
+      const date = new Date();
+      const start_date = date.getTime();
+
+      console.tron.log(date.getTime());
+
+      await api.put(`deliveryman/9/deliveries/14`, start_date);
+      Alert.alert('Sucesso!', 'Retirada de entrega confirmada!');
+      navigation.navigate('Dashboard');
+    } catch (err) {
+      Alert.alert('Erro', 'Não foi possível retirar a entrega');
+    }
+  }
+
+  function handleConfirmWithdraw() {
+    Alert.alert(
+      'Retirada de entrega',
+      'Deseja retirar a entrega?',
+      [
+        {
+          text: 'Cancelar',
+          onPress: () => {},
+        },
+        { text: 'Confirmar', onPress: () => WithdrawDelivery() },
+      ],
+      { cancelable: false }
+    );
   }
 
   return (
@@ -69,33 +98,7 @@ export default function DeliveryDetails({ navigation }) {
           </Row>
         </CardInfo>
 
-        <RowButtons>
-          <OptionButton
-            onPress={() => navigation.navigate('InformProblem', { delivery })}
-          >
-            <Icon name="highlight-off" size={30} color="#E74040" />
-            <TextButton>Informar</TextButton>
-            <TextButton>Problema</TextButton>
-          </OptionButton>
-
-          <Divider />
-
-          <OptionButton
-            onPress={() => navigation.navigate('ViewProblems', { delivery })}
-          >
-            <Icon name="info-outline" size={30} color="#E7BA40" />
-            <TextButton>Visualizar</TextButton>
-            <TextButton>Problemas</TextButton>
-          </OptionButton>
-
-          <Divider />
-
-          <OptionButton onPress={() => navigation.navigate('DeliveryConfirm')}>
-            <Icon name="check" size={30} color="#7D40E7" />
-            <TextButton>Confirmar</TextButton>
-            <TextButton>Entrega</TextButton>
-          </OptionButton>
-        </RowButtons>
+        <OptionsDelivery navigation={navigation} delivery={delivery} />
       </Container>
     </>
   );

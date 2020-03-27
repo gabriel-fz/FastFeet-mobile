@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { StatusBar, TouchableOpacity, Text } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { StatusBar } from 'react-native';
+import { withNavigationFocus } from 'react-navigation';
 import api from '~/services/api';
 
 import Header from '~/components/Header';
@@ -19,28 +19,24 @@ import {
   TextNotFound,
 } from './styles';
 
-export default function Dashboard({ navigation }) {
+function Dashboard({ navigation, isFocused }) {
   const { deliveryman } = useSelector((state) => state.auth);
 
   const [deliveriesCompleteds, setDeliveriesCompleteds] = useState(false);
   const [deliveries, setDeliveries] = useState([]);
 
+  async function loadDeliveries() {
+    const response = await api.get(`deliveryman/${deliveryman.id}/deliveries`, {
+      params: { completed: deliveriesCompleteds },
+    });
+    setDeliveries(response.data);
+  }
+
   useEffect(() => {
-    async function loadDeliveries() {
-      const response = await api.get(
-        `deliveyman/${deliveryman.id}/deliveries`,
-        {
-          params: { completed: deliveriesCompleteds },
-        }
-      );
-
-      console.tron.log('...');
-
-      setDeliveries(response.data);
+    if (isFocused) {
+      loadDeliveries();
     }
-
-    loadDeliveries();
-  }, [deliveriesCompleteds]);
+  }, [isFocused, deliveriesCompleteds]);
 
   return (
     <Container>
@@ -85,3 +81,5 @@ export default function Dashboard({ navigation }) {
 Dashboard.navigationOptions = {
   headerShown: false,
 };
+
+export default withNavigationFocus(Dashboard);

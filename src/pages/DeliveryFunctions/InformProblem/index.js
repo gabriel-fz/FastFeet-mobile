@@ -17,7 +17,7 @@ export default function InformProblem({ navigation }) {
   async function handleSubmit() {
     setLoading(true);
     try {
-      await api.post(`deliveyman/${delivery.id}/problems`, { description });
+      await api.post(`deliveryman/${delivery.id}/problems`, { description });
 
       setLoading(false);
       Alert.alert('Sucesso!', 'O problema que você informou foi recebido!');

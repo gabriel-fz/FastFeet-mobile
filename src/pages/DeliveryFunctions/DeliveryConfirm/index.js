@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import {
   View,
+  Alert,
   Text,
   TouchableOpacity,
   ScrollView,
@@ -31,10 +32,30 @@ export default function DeliveryConfirm({ navigation }) {
     loadDeliveries();
   }, [loadPage]);
 
+  function handleOk() {
+    console.tron.log('handle ok acionado');
+  }
+
+  function handleCancel() {
+    console.tron.log('handle cancel acionado');
+  }
+
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     console.tron.log('func');
-    setLoadPage(!loadPage);
+    Alert.alert(
+      'Erro',
+      'Não foi possível enviar o problema',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => handleCancel(),
+          style: 'cancel',
+        },
+        { text: 'OK', onPress: () => handleOk() },
+      ],
+      { cancelable: false }
+    );
     setRefreshing(false);
   }, [refreshing]);
 

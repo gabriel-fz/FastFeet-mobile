@@ -13,6 +13,7 @@ import DeliveryDetails from './pages/DeliveryFunctions/DeliveryDetails';
 import DeliveryConfirm from './pages/DeliveryFunctions/DeliveryConfirm';
 import InformProblem from './pages/DeliveryFunctions/InformProblem';
 import ViewProblems from './pages/DeliveryFunctions/ViewProblems';
+import WithdrawDelivery from './pages/DeliveryFunctions/WithdrawDelivery';
 
 export default (signed = false) =>
   createAppContainer(
@@ -31,6 +32,7 @@ export default (signed = false) =>
                   DeliveryConfirm,
                   InformProblem,
                   ViewProblems,
+                  WithdrawDelivery,
                 },
                 {
                   defaultNavigationOptions: {
@@ -56,6 +58,7 @@ export default (signed = false) =>
             Profile,
           },
           {
+            resetOnBlur: true,
             tabBarOptions: {
               keyboardHidesTabBar: true,
               activeTintColor: '#7D40E7',
