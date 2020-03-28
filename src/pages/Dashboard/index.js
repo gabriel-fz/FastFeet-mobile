@@ -49,7 +49,9 @@ function Dashboard({ navigation, isFocused }) {
   }, [isFocused]);
 
   const onRefresh = useCallback(() => {
+    setRefreshing(true);
     loadDeliveries();
+    setRefreshing(false);
   }, [refreshing]);
 
   return (

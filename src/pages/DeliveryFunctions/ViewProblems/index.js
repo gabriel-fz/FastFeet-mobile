@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { TouchableOpacity, RefreshControl, ScrollView } from 'react-native';
 import { parseISO, format } from 'date-fns';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -22,21 +22,23 @@ export default function ViewProblems({ navigation }) {
   const delivery = navigation.getParam('delivery');
 
   const [problems, setProblems] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  async function loadProblems() {
+    const response = await api.get(`delivery/${delivery.id}/problems`);
+
+    setProblems(response.data);
+  }
 
   useEffect(() => {
-    async function loadProblems() {
-      const response = await api.get(`delivery/${delivery.id}/problems`);
-
-      setProblems(response.data);
-    }
-
     loadProblems();
-
-    console.tron.log(problems);
   }, []);
 
-  console.tron.log('chegou:');
-  console.tron.log(delivery);
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    loadProblems();
+    setRefreshing(false);
+  }, [refreshing]);
 
   return (
     <>
@@ -47,6 +49,9 @@ export default function ViewProblems({ navigation }) {
 
         {problems.length > 0 ? (
           <List
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
             data={problems}
             keyExtractor={(item) => String(item.id)}
             renderItem={({ item }) => (
@@ -59,9 +64,15 @@ export default function ViewProblems({ navigation }) {
             )}
           />
         ) : (
-          <NotFound>
-            <TextNotFound>Nenhuma problema encontrado</TextNotFound>
-          </NotFound>
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
+            <NotFound>
+              <TextNotFound>Nenhuma problema encontrado</TextNotFound>
+            </NotFound>
+          </ScrollView>
         )}
       </Container>
     </>

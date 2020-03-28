@@ -39,7 +39,7 @@ export const DateProblem = styled.Text`
 `;
 
 export const NotFound = styled.View`
-  height: 100%;
+  margin-top: 100px;
   align-items: center;
   justify-content: center;
 `;
