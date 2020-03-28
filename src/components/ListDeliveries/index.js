@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { RefreshControl } from 'react-native';
+import React from 'react';
+import { RefreshControl, ScrollView } from 'react-native';
 
 import Delivery from '~/components/Delivery';
 
@@ -18,9 +18,11 @@ export default function ListDeliveries({ data, navigation, ...rest }) {
           )}
         />
       ) : (
-        <NotFound>
-          <TextNotFound>Nenhuma entrega encontrada</TextNotFound>
-        </NotFound>
+        <ScrollView refreshControl={<RefreshControl {...rest} />}>
+          <NotFound>
+            <TextNotFound>Nenhuma entrega encontrada</TextNotFound>
+          </NotFound>
+        </ScrollView>
       )}
     </>
   );

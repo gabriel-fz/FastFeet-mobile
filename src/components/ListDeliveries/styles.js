@@ -5,7 +5,7 @@ export const List = styled.FlatList.attrs({
 })``;
 
 export const NotFound = styled.View`
-  flex: 1;
+  margin-top: 100px;
   align-items: center;
   justify-content: center;
 `;

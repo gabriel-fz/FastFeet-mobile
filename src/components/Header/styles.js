@@ -11,6 +11,7 @@ export const Container = styled.View`
 export const Left = styled.View`
   flex-direction: row;
   align-items: center;
+  width: 230px;
 `;
 
 export const Avatar = styled.Image`
@@ -28,7 +29,9 @@ export const Welcome = styled.Text`
   color: #666666;
 `;
 
-export const Name = styled.Text`
+export const Name = styled.Text.attrs({
+  numberOfLines: 1,
+})`
   font-weight: bold;
   font-size: 22px;
   color: #444444;
