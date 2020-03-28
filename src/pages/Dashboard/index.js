@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { StatusBar } from 'react-native';
 import { withNavigationFocus } from 'react-navigation';
@@ -20,6 +20,7 @@ function Dashboard({ navigation, isFocused }) {
   const { deliveryman } = useSelector((state) => state.auth);
 
   const [complet, setComplet] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [deliveriesNotCompleteds, setDeliveriesNotCompleteds] = useState([]);
   const [deliveriesCompleteds, setDeliveriesCompleteds] = useState([]);
 
@@ -47,6 +48,10 @@ function Dashboard({ navigation, isFocused }) {
     }
   }, [isFocused]);
 
+  const onRefresh = useCallback(() => {
+    loadDeliveries();
+  }, [refreshing]);
+
   return (
     <Container>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
@@ -69,6 +74,8 @@ function Dashboard({ navigation, isFocused }) {
       <ListDeliveries
         data={complet ? deliveriesCompleteds : deliveriesNotCompleteds}
         navigation={navigation}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
       />
     </Container>
   );
