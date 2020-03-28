@@ -5,7 +5,7 @@ import { withNavigationFocus } from 'react-navigation';
 import api from '~/services/api';
 
 import Header from '~/components/Header';
-import Delivery from '~/components/Delivery';
+import ListDeliveries from '~/components/ListDeliveries';
 
 import {
   Container,
@@ -14,29 +14,38 @@ import {
   Options,
   OptionsButton,
   OptionsButtonText,
-  List,
-  NotFound,
-  TextNotFound,
 } from './styles';
 
 function Dashboard({ navigation, isFocused }) {
   const { deliveryman } = useSelector((state) => state.auth);
 
-  const [deliveriesCompleteds, setDeliveriesCompleteds] = useState(false);
-  const [deliveries, setDeliveries] = useState([]);
+  const [complet, setComplet] = useState(false);
+  const [deliveriesNotCompleteds, setDeliveriesNotCompleteds] = useState([]);
+  const [deliveriesCompleteds, setDeliveriesCompleteds] = useState([]);
 
   async function loadDeliveries() {
-    const response = await api.get(`deliveryman/${deliveryman.id}/deliveries`, {
-      params: { completed: deliveriesCompleteds },
-    });
-    setDeliveries(response.data);
+    const responseCompleted = await api.get(
+      `deliveryman/${deliveryman.id}/deliveries`,
+      {
+        params: { completed: true },
+      }
+    );
+    setDeliveriesCompleteds(responseCompleted.data);
+
+    const responseNotCompleted = await api.get(
+      `deliveryman/${deliveryman.id}/deliveries`,
+      {
+        params: { completed: false },
+      }
+    );
+    setDeliveriesNotCompleteds(responseNotCompleted.data);
   }
 
   useEffect(() => {
     if (isFocused) {
       loadDeliveries();
     }
-  }, [isFocused, deliveriesCompleteds]);
+  }, [isFocused]);
 
   return (
     <Container>
@@ -47,33 +56,20 @@ function Dashboard({ navigation, isFocused }) {
         <Title>Entregas</Title>
 
         <Options>
-          <OptionsButton onPress={() => setDeliveriesCompleteds(false)}>
-            <OptionsButtonText active={!deliveriesCompleteds}>
-              Pendentes
-            </OptionsButtonText>
+          <OptionsButton onPress={() => setComplet(false)}>
+            <OptionsButtonText active={!complet}>Pendentes</OptionsButtonText>
           </OptionsButton>
 
-          <OptionsButton onPress={() => setDeliveriesCompleteds(true)}>
-            <OptionsButtonText active={deliveriesCompleteds}>
-              Entregues
-            </OptionsButtonText>
+          <OptionsButton onPress={() => setComplet(true)}>
+            <OptionsButtonText active={complet}>Entregues</OptionsButtonText>
           </OptionsButton>
         </Options>
       </HeaderList>
 
-      {deliveries.length > 0 ? (
-        <List
-          data={deliveries}
-          keyExtractor={(item) => String(item.id)}
-          renderItem={({ item }) => (
-            <Delivery data={item} navigation={navigation} />
-          )}
-        />
-      ) : (
-        <NotFound>
-          <TextNotFound>Nenhuma entrega encontrada</TextNotFound>
-        </NotFound>
-      )}
+      <ListDeliveries
+        data={complet ? deliveriesCompleteds : deliveriesNotCompleteds}
+        navigation={navigation}
+      />
     </Container>
   );
 }

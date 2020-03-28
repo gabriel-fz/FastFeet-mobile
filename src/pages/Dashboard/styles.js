@@ -34,19 +34,3 @@ export const OptionsButtonText = styled.Text`
   font-weight: bold;
   text-decoration: ${(props) => (props.active ? 'underline' : 'none')};
 `;
-
-export const List = styled.FlatList.attrs({
-  showsVerticalScrollIndicator: false,
-})``;
-
-export const NotFound = styled.View`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const TextNotFound = styled.Text`
-  font-size: 20px;
-  font-weight: bold;
-  color: #999999;
-`;
