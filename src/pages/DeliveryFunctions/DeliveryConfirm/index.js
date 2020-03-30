@@ -1,77 +1,106 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import {
-  View,
-  Alert,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  RefreshControl,
-} from 'react-native';
+import React, { useState, useRef } from 'react';
+import { Alert, TouchableOpacity } from 'react-native';
+import { RNCamera } from 'react-native-camera';
+import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import api from '~/services/api';
 
 import BackgroundDetails from '~/components/BackgroundDetails';
 
-import { Container } from './styles';
-
-function wait(timeout) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, timeout);
-  });
-}
+import {
+  Container,
+  Camera,
+  CameraView,
+  CameraButton,
+  Thumbnail,
+  SubmitButton,
+} from './styles';
 
 export default function DeliveryConfirm({ navigation }) {
-  const [refreshing, setRefreshing] = useState(false);
-  const [teste, setTeste] = useState('Gabriel');
-  const [loadPage, setLoadPage] = useState(true);
+  const { deliveryman } = useSelector((state) => state.auth);
+  const delivery = navigation.getParam('delivery');
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    async function loadDeliveries() {
-      setTeste('Gabriel Fiorese Zancanela');
-      console.tron.log(loadPage);
+  let cameraRef = useRef();
+  const [file, setFile] = useState(null);
+
+  async function handleTakePicture() {
+    if (cameraRef) {
+      const options = { quality: 0.5, base64: true };
+      const data = await cameraRef.current.takePictureAsync(options);
+      setFile(data);
     }
-    loadDeliveries();
-  }, [loadPage]);
-
-  function handleOk() {
-    console.tron.log('handle ok acionado');
   }
 
-  function handleCancel() {
-    console.tron.log('handle cancel acionado');
-  }
+  async function handleSubmit() {
+    try {
+      setLoading(true);
+      const dataFile = new FormData();
 
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    console.tron.log('func');
-    Alert.alert(
-      'Erro',
-      'Não foi possível enviar o problema',
-      [
-        {
-          text: 'Cancel',
-          onPress: () => handleCancel(),
-          style: 'cancel',
-        },
-        { text: 'OK', onPress: () => handleOk() },
-      ],
-      { cancelable: false }
-    );
-    setRefreshing(false);
-  }, [refreshing]);
+      dataFile.append('file', {
+        uri: file.uri,
+        name: `signature-${delivery.id}-${deliveryman.id}.jpg`,
+        type: 'image/jpg',
+      });
+
+      const response = await api.post(
+        `deliveryman/${deliveryman.id}/signature`,
+        dataFile
+      );
+
+      const { id } = response.data;
+      const end_date = new Date();
+
+      await api.put(`deliveryman/${deliveryman.id}/deliveries/${delivery.id}`, {
+        end_date,
+        signature_id: id,
+      });
+
+      setLoading(false);
+      Alert.alert('Sucesso!', 'A entrega do seu produto foi registrada!');
+      navigation.navigate('Dashboard');
+    } catch (err) {
+      setLoading(false);
+      Alert.alert('Erro', 'Não foi possível retirar a entrega');
+    }
+  }
 
   return (
     <>
       <BackgroundDetails />
       <Container>
-        <ScrollView
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        >
-          <Text>Pull down to see RefreshControl indicator</Text>
-          <Text>Nome:</Text>
-          <Text>{teste}</Text>
-        </ScrollView>
+        <CameraView>
+          {file ? (
+            <Thumbnail source={{ uri: file.uri }} />
+          ) : (
+            <Camera
+              ref={cameraRef}
+              type={RNCamera.Constants.Type.back}
+              captureAudio={false}
+              androidCameraPermissionOptions={{
+                title: 'Permissão para usar a câmera',
+                message: 'Permita que o aplicativo use a câmera',
+                buttonPositive: 'Permitir',
+                buttonNegative: 'Cancelar',
+              }}
+            />
+          )}
+
+          {file ? (
+            <CameraButton onPress={() => setFile(null)}>
+              <Icon name="close" size={25} color="#fff" />
+            </CameraButton>
+          ) : (
+            <CameraButton onPress={handleTakePicture}>
+              <Icon name="camera-alt" size={25} color="#fff" />
+            </CameraButton>
+          )}
+        </CameraView>
+
+        <SubmitButton enabled={!!file} loading={loading} onPress={handleSubmit}>
+          {file ? 'Enviar' : 'Tire foto da assinatura'}
+        </SubmitButton>
       </Container>
     </>
   );
