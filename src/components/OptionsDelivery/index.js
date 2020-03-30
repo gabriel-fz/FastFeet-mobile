@@ -7,13 +7,15 @@ export default function OptionsDelivery({ navigation, delivery }) {
   return (
     <Container>
       <OptionButton
-        enabled={!delivery.end_date}
+        enabled={delivery.end_date || !delivery.start_date ? false : true}
         onPress={() => navigation.navigate('InformProblem', { delivery })}
       >
         <Icon
           name="highlight-off"
           size={30}
-          color={delivery.end_date ? '#999999' : '#E74040'}
+          color={
+            delivery.end_date || !delivery.start_date ? '#999999' : '#E74040'
+          }
         />
         <TextButton>Informar</TextButton>
         <TextButton>Problema</TextButton>
@@ -22,9 +24,14 @@ export default function OptionsDelivery({ navigation, delivery }) {
       <Divider />
 
       <OptionButton
+        enabled={!!delivery.start_date}
         onPress={() => navigation.navigate('ViewProblems', { delivery })}
       >
-        <Icon name="info-outline" size={30} color="#E7BA40" />
+        <Icon
+          name="info-outline"
+          size={30}
+          color={!delivery.start_date ? '#999999' : '#E7BA40'}
+        />
         <TextButton>Visualizar</TextButton>
         <TextButton>Problemas</TextButton>
       </OptionButton>

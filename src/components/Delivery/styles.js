@@ -38,6 +38,7 @@ export const Name = styled.Text`
 `;
 
 export const Detail = styled.View`
+  flex: 1;
   align-items: flex-start;
 `;
 
@@ -47,7 +48,9 @@ export const TitleDetail = styled.Text`
   color: #999999;
 `;
 
-export const TextDetail = styled.Text`
+export const TextDetail = styled.Text.attrs({
+  numberOfLines: 1,
+})`
   font-size: 12px;
   font-weight: bold;
   color: #444444;
@@ -57,4 +60,5 @@ export const DetailLinkText = styled.Text`
   font-size: 12px;
   font-weight: bold;
   color: #7d40e7;
+  margin-left: 5px;
 `;
