@@ -12,6 +12,7 @@ import {
   List,
   CardProblem,
   TextProblem,
+  Right,
   DateProblem,
   NotFound,
   TextNotFound,
@@ -54,7 +55,9 @@ export default function ViewProblems({ navigation }) {
             renderItem={({ item }) => (
               <CardProblem>
                 <TextProblem>{item.description}</TextProblem>
-                <DateProblem date={item.createdAt} />
+                <Right>
+                  <DateProblem date={item.createdAt} />
+                </Right>
               </CardProblem>
             )}
           />

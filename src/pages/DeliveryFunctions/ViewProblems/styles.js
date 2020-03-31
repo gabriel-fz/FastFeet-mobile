@@ -22,15 +22,21 @@ export const List = styled.FlatList.attrs({
 
 export const CardProblem = styled(Card)`
   flex-direction: row;
-  justify-content: space-between;
+  flex-wrap: wrap-reverse;
   padding: 17px;
   margin-bottom: 15px;
 `;
 
 export const TextProblem = styled.Text`
-  flex: 1;
   font-size: 16px;
   color: #999999;
+`;
+
+export const Right = styled.View`
+  flex: 1;
+  align-items: flex-end;
+  border: 1px solid #fff;
+  flex-shrink: 0;
 `;
 
 export const DateProblem = styled(DateFormat)`
