@@ -1,19 +1,23 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { StatusBar } from 'react-native';
-import { parseISO, format } from 'date-fns';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import userAvatar from '~/assets/avatar-user.png';
 import { signOut } from '~/store/modules/auth/actions';
 
-import { Container, Avatar, Title, DeliveryData, LogoutButton } from './styles';
+import {
+  Container,
+  Avatar,
+  Title,
+  DeliveryInfo,
+  DeliveryDate,
+  LogoutButton,
+} from './styles';
 
 export default function Profile() {
   const dispatch = useDispatch();
-  const { deliveryman, loading } = useSelector((state) => state.auth);
-
-  console.tron.log(loading);
+  const { deliveryman } = useSelector((state) => state.auth);
 
   function handleLogout() {
     dispatch(signOut());
@@ -34,15 +38,13 @@ export default function Profile() {
         />
 
         <Title>Nome completo</Title>
-        <DeliveryData>{deliveryman.name}</DeliveryData>
+        <DeliveryInfo>{deliveryman.name}</DeliveryInfo>
 
         <Title>Email</Title>
-        <DeliveryData>{deliveryman.email}</DeliveryData>
+        <DeliveryInfo>{deliveryman.email}</DeliveryInfo>
 
         <Title>Data de cadastro</Title>
-        <DeliveryData>
-          {format(parseISO(deliveryman.created_at), 'dd/MM/YYY')}
-        </DeliveryData>
+        <DeliveryDate date={deliveryman.created_at} />
 
         <LogoutButton onPress={handleLogout}>Logout</LogoutButton>
       </Container>

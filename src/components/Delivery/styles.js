@@ -1,15 +1,15 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
-  border-radius: 4px;
+import Card from '~/components/Card';
+import DateFormat from '~/components/DateFormat';
+
+export const Container = styled(Card)`
   align-self: stretch;
-  border: 1px solid #eee;
   margin-bottom: 28px;
 `;
 
 export const Header = styled.View`
   align-self: stretch;
-  background: #fff;
   flex-direction: row;
   align-items: center;
   padding: 13px;
@@ -17,7 +17,6 @@ export const Header = styled.View`
 
 export const Content = styled.View`
   align-self: stretch;
-  background: #fff;
   padding: 13px 13px 20px;
 `;
 
@@ -51,6 +50,12 @@ export const TitleDetail = styled.Text`
 export const TextDetail = styled.Text.attrs({
   numberOfLines: 1,
 })`
+  font-size: 12px;
+  font-weight: bold;
+  color: #444444;
+`;
+
+export const DataDetail = styled(DateFormat)`
   font-size: 12px;
   font-weight: bold;
   color: #444444;

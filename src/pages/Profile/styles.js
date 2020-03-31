@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 
 import Button from '~/components/Button';
+import DateFormat from '~/components/DateFormat';
 
 export const Container = styled.View`
   flex: 1;
@@ -24,7 +25,15 @@ export const Title = styled.Text`
   text-align: left;
 `;
 
-export const DeliveryData = styled.Text`
+export const DeliveryInfo = styled.Text`
+  font-size: 20px;
+  color: #666666;
+  font-weight: bold;
+  align-self: stretch;
+  text-align: left;
+`;
+
+export const DeliveryDate = styled(DateFormat)`
   font-size: 20px;
   color: #666666;
   font-weight: bold;

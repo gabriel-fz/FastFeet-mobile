@@ -29,9 +29,7 @@ export default function InformProblem({ navigation }) {
   }
 
   return (
-    <>
-      <BackgroundDetails />
-
+    <BackgroundDetails>
       <Container>
         <Form>
           <FormInput
@@ -51,7 +49,7 @@ export default function InformProblem({ navigation }) {
           Enviar
         </SubmitButton>
       </Container>
-    </>
+    </BackgroundDetails>
   );
 }
 

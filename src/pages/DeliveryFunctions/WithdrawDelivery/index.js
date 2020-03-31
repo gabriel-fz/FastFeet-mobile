@@ -9,7 +9,7 @@ import BackgroundDetails from '~/components/BackgroundDetails';
 
 import {
   Container,
-  Card,
+  CardInfo,
   TitleCard,
   TitleInfo,
   ConfirmButton,
@@ -55,14 +55,13 @@ export default function WithdrawDelivery({ navigation }) {
   }
 
   return (
-    <>
-      <BackgroundDetails />
+    <BackgroundDetails>
       <Container>
-        <Card>
+        <CardInfo>
           <TitleCard>Deseja mesmo retirar este produto?</TitleCard>
 
           <TitleInfo>{`Você pode fazer mais ${contWithdraw} retiradas hoje`}</TitleInfo>
-        </Card>
+        </CardInfo>
 
         <ConfirmButton loading={loading} onPress={handleWithdrawDelivery}>
           Confirmar
@@ -75,7 +74,7 @@ export default function WithdrawDelivery({ navigation }) {
           Cancelar
         </CancelButton>
       </Container>
-    </>
+    </BackgroundDetails>
   );
 }
 

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { TouchableOpacity, RefreshControl, ScrollView } from 'react-native';
-import { parseISO, format } from 'date-fns';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import api from '~/services/api';
@@ -41,9 +40,7 @@ export default function ViewProblems({ navigation }) {
   }, [refreshing]);
 
   return (
-    <>
-      <BackgroundDetails />
-
+    <BackgroundDetails>
       <Container>
         <DeliveryName>{delivery.product}</DeliveryName>
 
@@ -57,9 +54,7 @@ export default function ViewProblems({ navigation }) {
             renderItem={({ item }) => (
               <CardProblem>
                 <TextProblem>{item.description}</TextProblem>
-                <DateProblem>
-                  {format(parseISO(item.createdAt), 'dd/MM/YYY')}
-                </DateProblem>
+                <DateProblem date={item.createdAt} />
               </CardProblem>
             )}
           />
@@ -75,7 +70,7 @@ export default function ViewProblems({ navigation }) {
           </ScrollView>
         )}
       </Container>
-    </>
+    </BackgroundDetails>
   );
 }
 

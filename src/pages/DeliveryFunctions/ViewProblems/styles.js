@@ -1,5 +1,8 @@
 import styled from 'styled-components/native';
 
+import Card from '~/components/Card';
+import DateFormat from '~/components/DateFormat';
+
 export const Container = styled.View`
   flex: 1;
   padding: 80px 20px 0;
@@ -17,13 +20,10 @@ export const List = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
 })``;
 
-export const CardProblem = styled.View`
+export const CardProblem = styled(Card)`
   flex-direction: row;
   justify-content: space-between;
-  background: #fff;
   padding: 17px;
-  border-radius: 4px;
-  border: 1px solid #eee;
   margin-bottom: 15px;
 `;
 
@@ -33,7 +33,7 @@ export const TextProblem = styled.Text`
   color: #999999;
 `;
 
-export const DateProblem = styled.Text`
+export const DateProblem = styled(DateFormat)`
   font-size: 12px;
   color: #c1c1c1;
 `;

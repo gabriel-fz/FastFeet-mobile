@@ -34,3 +34,10 @@ export const OptionsButtonText = styled.Text`
   font-weight: bold;
   text-decoration: ${(props) => (props.active ? 'underline' : 'none')};
 `;
+
+export const LoadingIndicator = styled.ActivityIndicator.attrs({
+  color: '#7D40E7',
+  size: 'large',
+})`
+  flex: 1;
+`;

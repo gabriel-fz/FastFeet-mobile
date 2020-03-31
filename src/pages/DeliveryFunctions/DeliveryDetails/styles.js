@@ -1,15 +1,15 @@
 import styled from 'styled-components/native';
 
+import Card from '~/components/Card';
+import DateFormat from '~/components/DateFormat';
+
 export const Container = styled.View`
   flex: 1;
   padding: 80px 20px 0;
 `;
 
-export const CardInfo = styled.View`
-  background: #fff;
+export const CardInfo = styled(Card)`
   padding: 15px 12px;
-  border-radius: 4px;
-  border: 1px solid #eee;
   margin-bottom: 10px;
 `;
 
@@ -39,6 +39,12 @@ export const TitleInfo = styled.Text`
 `;
 
 export const TextInfo = styled.Text`
+  font-size: 14px;
+  color: #666666;
+  margin-bottom: 15px;
+`;
+
+export const DateInfo = styled(DateFormat)`
   font-size: 14px;
   color: #666666;
   margin-bottom: 15px;

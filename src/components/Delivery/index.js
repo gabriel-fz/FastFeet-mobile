@@ -13,6 +13,7 @@ import {
   Detail,
   TitleDetail,
   TextDetail,
+  DataDetail,
   DetailLinkText,
 } from './styles';
 
@@ -31,7 +32,7 @@ export default function Delivery({ data, navigation }) {
       <Footer>
         <Detail>
           <TitleDetail>Data</TitleDetail>
-          <TextDetail>14/01/2020</TextDetail>
+          <DataDetail date={data.end_date ? data.end_date : data.createdAt} />
         </Detail>
 
         <Detail>

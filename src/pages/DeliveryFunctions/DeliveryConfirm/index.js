@@ -62,13 +62,12 @@ export default function DeliveryConfirm({ navigation }) {
       navigation.navigate('Dashboard');
     } catch (err) {
       setLoading(false);
-      Alert.alert('Erro', 'Não foi possível retirar a entrega');
+      Alert.alert('Erro', 'Não foi possível concluir a entrega');
     }
   }
 
   return (
-    <>
-      <BackgroundDetails />
+    <BackgroundDetails>
       <Container>
         <CameraView>
           {file ? (
@@ -102,7 +101,7 @@ export default function DeliveryConfirm({ navigation }) {
           {file ? 'Enviar' : 'Tire foto da assinatura'}
         </SubmitButton>
       </Container>
-    </>
+    </BackgroundDetails>
   );
 }
 

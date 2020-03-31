@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 
+import Card from '~/components/Card';
 import Button from '~/components/Button';
 
 export const Container = styled.View`
@@ -7,11 +8,8 @@ export const Container = styled.View`
   padding: 80px 20px 0;
 `;
 
-export const Card = styled.View`
-  background: #fff;
+export const CardInfo = styled(Card)`
   padding: 15px 12px;
-  border-radius: 4px;
-  border: 1px solid #eee;
   margin-bottom: 10px;
 `;
 

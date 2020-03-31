@@ -1,9 +1,6 @@
 import React from 'react';
-import { View, Alert, TouchableOpacity } from 'react-native';
-import { parseISO, format } from 'date-fns';
+import { View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
-import api from '~/services/api';
 
 import BackgroundDetails from '~/components/BackgroundDetails';
 import OptionsDelivery from '~/components/OptionsDelivery';
@@ -16,49 +13,15 @@ import {
   CardTitle,
   TitleInfo,
   TextInfo,
+  DateInfo,
 } from './styles';
 
 export default function DeliveryDetails({ navigation }) {
   const delivery = navigation.getParam('data');
   const { recipient } = delivery;
 
-  function formatDate(date) {
-    return date ? format(parseISO(date), 'dd/MM/YYY') : '- - / - - / - -';
-  }
-
-  async function WithdrawDelivery() {
-    try {
-      const date = new Date();
-      const start_date = date.getTime();
-
-      console.tron.log(date.getTime());
-
-      await api.put(`deliveryman/9/deliveries/14`, start_date);
-      Alert.alert('Sucesso!', 'Retirada de entrega confirmada!');
-      navigation.navigate('Dashboard');
-    } catch (err) {
-      Alert.alert('Erro', 'Não foi possível retirar a entrega');
-    }
-  }
-
-  function handleConfirmWithdraw() {
-    Alert.alert(
-      'Retirada de entrega',
-      'Deseja retirar a entrega?',
-      [
-        {
-          text: 'Cancelar',
-          onPress: () => {},
-        },
-        { text: 'Confirmar', onPress: () => WithdrawDelivery() },
-      ],
-      { cancelable: false }
-    );
-  }
-
   return (
-    <>
-      <BackgroundDetails />
+    <BackgroundDetails>
       <Container>
         <CardInfo>
           <CardHeader>
@@ -88,19 +51,19 @@ export default function DeliveryDetails({ navigation }) {
           <Row>
             <View>
               <TitleInfo>DATA DE RETIRADA</TitleInfo>
-              <TextInfo>{formatDate(delivery.start_date)}</TextInfo>
+              <DateInfo date={delivery.start_date} />
             </View>
 
             <View>
               <TitleInfo>DATA DE ENTREGA</TitleInfo>
-              <TextInfo>{formatDate(delivery.end_date)}</TextInfo>
+              <DateInfo date={delivery.end_date} />
             </View>
           </Row>
         </CardInfo>
 
         <OptionsDelivery navigation={navigation} delivery={delivery} />
       </Container>
-    </>
+    </BackgroundDetails>
   );
 }
 
