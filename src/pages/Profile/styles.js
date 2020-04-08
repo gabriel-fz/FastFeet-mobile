@@ -7,6 +7,7 @@ export const Container = styled.View`
   flex: 1;
   padding: 0 35px;
   align-items: center;
+  background: #fff;
 `;
 
 export const Avatar = styled.Image`
