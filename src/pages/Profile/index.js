@@ -32,7 +32,7 @@ export default function Profile() {
           source={
             deliveryman.avatar
               ? {
-                  uri: `/files/${deliveryman.avatar.path}`,
+                  uri: `${linkLocal}/files/${deliveryman.avatar.path}`,
                 }
               : userAvatar
           }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { StatusBar, ActivityIndicator } from 'react-native';
+import { StatusBar } from 'react-native';
 import { withNavigationFocus } from 'react-navigation';
 import api from '~/services/api';
 
@@ -29,7 +29,8 @@ function Dashboard({ navigation, isFocused }) {
   /**
    * A função seguinte faz duas chamadas para preencher as listas com entregas
    * concluídas e não concluídas, tudo isso devido ao back-end ter essas duas rotas
-   * para caso necessite fazer uma chamada de apenas uma lista específica
+   * para caso necessite fazer uma chamada de apenas uma lista específica.
+   * Tal função seria utilizado para paginação futuramente
    */
 
   async function loadDeliveries() {
