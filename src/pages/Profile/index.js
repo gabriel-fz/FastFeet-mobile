@@ -4,6 +4,7 @@ import { StatusBar } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import userAvatar from '~/assets/avatar-user.png';
+import linkLocal from '~/services/linkLocal.js';
 import { signOut } from '~/store/modules/auth/actions';
 
 import {
@@ -31,7 +32,7 @@ export default function Profile() {
           source={
             deliveryman.avatar
               ? {
-                  uri: `http://192.168.0.107:3333/files/${deliveryman.avatar.path}`,
+                  uri: `/files/${deliveryman.avatar.path}`,
                 }
               : userAvatar
           }

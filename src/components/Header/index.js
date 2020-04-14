@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import userAvatar from '~/assets/avatar-user.png';
+import linkLocal from '~/services/linkLocal.js';
 import { signOut } from '~/store/modules/auth/actions';
 
 import { Container, Left, Avatar, Info, Welcome, Name } from './styles';
@@ -22,7 +23,7 @@ export default function Header({ deliveryman }) {
           source={
             deliveryman.avatar
               ? {
-                  uri: `http://192.168.0.107:3333/files/${deliveryman.avatar.path}`,
+                  uri: `${linkLocal}/files/${deliveryman.avatar.path}`,
                 }
               : userAvatar
           }
